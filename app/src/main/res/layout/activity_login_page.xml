@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
         android:paddingVertical="30dp"
-        android:hint="TC Kimlik No"
+        android:hint="TC Kimlik N"
         android:selectAllOnFocus="true"
          />
 
