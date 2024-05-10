@@ -23,9 +23,9 @@ public class SignupPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 System.out.println("Tıklandı");
-                String fullname = binding.fullname.toString();
-                String tc = binding.username.toString();
-                String sifre = binding.password.toString();
+                String fullname = binding.fullname.getText().toString();
+                String tc = binding.username.getText().toString();
+                String sifre = binding.password.getText().toString();
                 System.out.println("fname = " + fullname);
                 System.out.println("tc = " + tc );
                 System.out.println("sifre = " + sifre);
