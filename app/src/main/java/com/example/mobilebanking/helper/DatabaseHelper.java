@@ -2,6 +2,7 @@ package com.example.mobilebanking.helper;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -69,4 +70,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return result;
     }
+
+    public Musteri selectMusteri(String musteriTC, String musteriSifre) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Musteri musteri = null;
+
+        // Sorguyu hazırla
+        String[] columns = {"musteriNo", "musteriFullname", "musteriTC", "musteriSifre"};
+        String selection = "musteriTC=? AND musteriSifre=?";
+        String[] selectionArgs = {musteriTC, musteriSifre};
+
+        // Veritabanından müşteriyi seç
+        Cursor cursor = db.query("musteriler", columns, selection, selectionArgs, null, null, null);
+
+        // Eğer müşteri bulunursa, bilgilerini al
+        if (cursor != null && cursor.moveToFirst()) {
+            musteri = new Musteri();
+            musteri.setMusteriNo(cursor.getInt(cursor.getColumnIndex("musteriNo")));
+            musteri.setMusteriFullname(cursor.getString(cursor.getColumnIndex("musteriFullname")));
+            musteri.setMusteriTC(cursor.getString(cursor.getColumnIndex("musteriTC")));
+            musteri.setMusteriSifre(cursor.getString(cursor.getColumnIndex("musteriSifre")));
+        }
+
+        // Cursor'ı kapat
+        if (cursor != null) {
+            cursor.close();
+        }
+
+        db.close();
+
+        return musteri;
+    }
+
+
 }

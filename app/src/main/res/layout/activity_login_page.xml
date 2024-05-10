@@ -30,6 +30,7 @@
             android:layout_marginTop="30dp"
         android:paddingVertical="30dp"
         android:hint="TC Kimlik No"
+            android:maxLength="11"
         android:selectAllOnFocus="true"
          />
 
@@ -40,7 +41,7 @@
         android:layout_marginTop="8dp"
         android:hint="Şifre"
         android:paddingVertical="30dp"
-        android:inputType="textPassword"
+        android:inputType="numberPassword"
         android:maxLength="6"
          />
 
