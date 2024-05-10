@@ -30,6 +30,7 @@
             android:layout_marginTop="30dp"
             android:paddingVertical="30dp"
             android:hint="TC Kimlik No"
+            android:maxLength="11"
             android:selectAllOnFocus="true"
             />
 
@@ -39,6 +40,7 @@
             android:layout_height="wrap_content"
             android:paddingVertical="30dp"
             android:hint="Ad Soyad"
+            android:maxLength="30"
             />
 
         <EditText
@@ -48,8 +50,9 @@
             android:layout_marginTop="8dp"
             android:hint="Şifre"
             android:paddingVertical="30dp"
-            android:inputType="textPassword"
+            android:inputType="numberPassword"
             android:maxLength="6"
+
             />
         <CheckBox
             android:layout_width="match_parent"
