@@ -2,25 +2,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menuHome"
-        android:title="Home"
+        android:title="Ana Sayfa"
         android:icon="@drawable/ic_home" />
 
     <item
-        android:id="@+id/menuHistory"
-        android:title="History"
-        android:icon="@drawable/ic_history" />
+        android:id="@+id/menuCurrency"
+        android:title="Döviz"
+        android:icon="@drawable/ic_currency" />
 
     <item
         android:id="@+id/placeholder"
         android:checkable="false" />
 
     <item
-        android:id="@+id/menuNotification"
-        android:title="Notification"
-        android:icon="@drawable/ic_notification" />
+        android:id="@+id/menuProfile"
+        android:title="Profil"
+        android:icon="@drawable/ic_user" />
 
     <item
-        android:id="@+id/menuProfile"
-        android:title="Profile"
-        android:icon="@drawable/ic_user" />
+        android:id="@+id/menuLogOut"
+        android:title="Çıkış Yap"
+        android:icon="@drawable/logout" />
 </menu>
