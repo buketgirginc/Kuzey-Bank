@@ -11,20 +11,16 @@
         android:theme="@style/Theme.MobileBanking">
         <activity
             android:name=".SignupPageActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.login.LoginActivity"
-            android:exported="false"
-            android:label="@string/title_activity_login" />
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".LoginPage"
             android:exported="false" />
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
