@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MobileBanking">
+
         <activity
             android:name=".SignupPageActivity"
             >
@@ -17,10 +18,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".LoginPage"
             android:exported="false" />
         <activity android:name=".MainActivity">
+
+        </activity>
+
+        <activity android:name=".CurrencyTableActivity">
+
         </activity>
     </application>
 
