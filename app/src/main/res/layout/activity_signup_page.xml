@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:paddingVertical="20dp"
             android:layout_gravity="start"
-            android:laysout_marginTop="16dp"
+            android:layout_marginTop="16dp"
             android:enabled="false"
             android:text="Kayıt Ol"
             android:textColor="@color/white"

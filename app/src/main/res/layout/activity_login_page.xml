@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
         android:paddingVertical="30dp"
-        android:hint="TC Kimlik N"
+        android:hint="TC Kimlik No"
         android:selectAllOnFocus="true"
          />
 
@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:paddingVertical="20dp"
         android:layout_gravity="start"
-        android:laysout_marginTop="16dp"
+        android:layout_marginTop="16dp"
         android:enabled="false"
         android:text="Giriş Yap"
         android:textColor="@color/white"
