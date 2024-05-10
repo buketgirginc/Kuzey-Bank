@@ -56,6 +56,27 @@
         android:textColor="@color/white"
         android:backgroundTint="@color/light_blue"
          />
+        <TextView
+            android:layout_marginVertical="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kayıtlı değil misiniz?"
+            android:textAlignment="center"
+            />
+
+        <Button
+            android:id="@+id/goToSignUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="10dp"
+            android:layout_gravity="start"
+            android:enabled="false"
+            android:text="Kayıt Ol"
+            android:textStyle="bold"
+            android:textColor="@color/light_blue"
+            android:backgroundTint="@color/white"
+            />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
