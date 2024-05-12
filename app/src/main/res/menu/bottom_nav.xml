@@ -11,8 +11,8 @@
         android:icon="@drawable/ic_currency" />
 
     <item
-        android:id="@+id/placeholder"
-        android:checkable="false" />
+        android:id="@+id/menuAccounts"
+        android:title="" />
 
     <item
         android:id="@+id/menuProfile"

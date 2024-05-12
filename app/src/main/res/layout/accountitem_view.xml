@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <TextView
+        android:id="@+id/accId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        tools:text="ID"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginStart="15dp"
+        />
+
+    <TextView
+        android:id="@+id/accName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        tools:text="Hesap Adı"
+        android:textSize="18sp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/accId"
+        />
+
+    <TextView
+        android:id="@+id/accBalance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        tools:text="Bakiye"
+        android:textSize="18sp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/accName"
+        />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@id/accBalance"
+        android:layout_marginTop="10dp"
+        />
+
+</RelativeLayout>

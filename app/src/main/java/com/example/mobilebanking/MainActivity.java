@@ -2,7 +2,10 @@ package com.example.mobilebanking;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +17,7 @@ import com.example.mobilebanking.helper.SessionManager;
 import com.example.mobilebanking.model.Hesap;
 import com.example.mobilebanking.model.Musteri;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -63,9 +67,11 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+
         musteri = SessionManager.getUser(this);
         anaHesap = musteri.getHesaplar().get(0);
         databaseHelper = new DatabaseHelper(this);
+
         setContentView(R.layout.activity_main);
 
         BottomNavigationView navigation = findViewById(R.id.bottomNavigationView);
@@ -73,6 +79,15 @@ public class MainActivity extends AppCompatActivity {
 
         // İlk olarak ana sayfayı aç
         openHomeFragment();
+
+        FloatingActionButton fb = findViewById(R.id.accountsButton);
+
+        fb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openAccountsFragment();
+            }
+        });
     }
     private void openHomeFragment() {
         openFragment(new PartialMainFragment(anaHesap));
@@ -84,6 +99,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void openProfileFragment() {
         openFragment(new ProfileFragment(musteri, databaseHelper));
+    }
+
+    private void openAccountsFragment() {
+        openFragment(new AccountsFragment());
     }
 
     private void openFragment(Fragment fragment){

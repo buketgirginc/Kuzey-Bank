@@ -40,6 +40,7 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/accountsButton"
         android:src="@drawable/ic_burgermenu"
         app:layout_anchor="@id/bottomAppBar"
         app:fabCustomSize="72dp"
