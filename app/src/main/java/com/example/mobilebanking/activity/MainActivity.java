@@ -1,17 +1,20 @@
-package com.example.mobilebanking;
+package com.example.mobilebanking.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.mobilebanking.fragment.AccountsFragment;
+import com.example.mobilebanking.fragment.CurrencyTableFragment;
+import com.example.mobilebanking.fragment.PartialMainFragment;
+import com.example.mobilebanking.fragment.ProfileFragment;
+import com.example.mobilebanking.R;
 import com.example.mobilebanking.helper.DatabaseHelper;
 import com.example.mobilebanking.helper.SessionManager;
 import com.example.mobilebanking.model.Hesap;
@@ -46,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
                 default:
                     SessionManager.logout(MainActivity.this);
-                    Intent intent = new Intent(MainActivity.this, LoginPage.class);
+                    Intent intent = new Intent(MainActivity.this, LoginPageActivity.class);
                     startActivity(intent);
                     finish();
             }
@@ -68,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         if (!SessionManager.isLoggedIn(this)) {
-            Intent intent = new Intent(this, LoginPage.class);
+            Intent intent = new Intent(this, LoginPageActivity.class);
             startActivity(intent);
             finish();
             return;

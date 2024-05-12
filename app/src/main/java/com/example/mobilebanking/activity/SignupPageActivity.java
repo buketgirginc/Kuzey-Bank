@@ -1,11 +1,10 @@
-package com.example.mobilebanking;
+package com.example.mobilebanking.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mobilebanking.databinding.ActivitySignupPageBinding;
@@ -49,7 +48,7 @@ public class SignupPageActivity extends AppCompatActivity {
 
                 if (databaseHelper.addMusteri(musteri) != -1){
                     Toast.makeText(SignupPageActivity.this, "Kayıt başarılı.", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(SignupPageActivity.this, LoginPage.class);
+                    Intent intent = new Intent(SignupPageActivity.this, LoginPageActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
@@ -59,7 +58,7 @@ public class SignupPageActivity extends AppCompatActivity {
         });
 
         binding.goToLogIn.setOnClickListener( v -> {
-            Intent intent = new Intent(this, LoginPage.class);
+            Intent intent = new Intent(this, LoginPageActivity.class);
             startActivity(intent);
         });
     }

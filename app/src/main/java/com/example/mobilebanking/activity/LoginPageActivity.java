@@ -1,7 +1,6 @@
-package com.example.mobilebanking;
+package com.example.mobilebanking.activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 
@@ -13,7 +12,7 @@ import com.example.mobilebanking.helper.SessionManager;
 import com.example.mobilebanking.model.Musteri;
 import com.example.mobilebanking.utils.MyAlertDialog;
 
-public class LoginPage extends AppCompatActivity {
+public class LoginPageActivity extends AppCompatActivity {
     ActivityLoginPageBinding binding;
     DatabaseHelper databaseHelper;
     @Override

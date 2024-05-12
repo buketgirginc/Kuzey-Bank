@@ -1,4 +1,4 @@
-package com.example.mobilebanking;
+package com.example.mobilebanking.fragment;
 
 import android.os.Bundle;
 
@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mobilebanking.R;
 import com.example.mobilebanking.helper.DatabaseHelper;
 import com.example.mobilebanking.model.Musteri;
 import com.example.mobilebanking.utils.MyAlertDialog;

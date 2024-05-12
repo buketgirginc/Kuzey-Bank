@@ -1,4 +1,4 @@
-package com.example.mobilebanking;
+package com.example.mobilebanking.view;
 
 import android.view.View;
 import android.widget.TextView;
@@ -6,10 +6,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MyViewHolder extends RecyclerView.ViewHolder {
+import com.example.mobilebanking.R;
 
-    TextView idView, nameView, balanceView;
-    public MyViewHolder(@NonNull View itemView) {
+public class AccountViewHolder extends RecyclerView.ViewHolder {
+
+    public TextView idView, nameView, balanceView;
+    public AccountViewHolder(@NonNull View itemView) {
         super(itemView);
         idView = itemView.findViewById(R.id.accId);
         nameView = itemView.findViewById(R.id.accName);

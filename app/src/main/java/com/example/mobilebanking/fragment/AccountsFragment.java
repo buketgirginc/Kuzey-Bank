@@ -1,4 +1,4 @@
-package com.example.mobilebanking;
+package com.example.mobilebanking.fragment;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -17,12 +17,13 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 
+import com.example.mobilebanking.R;
+import com.example.mobilebanking.adapter.AccountAdapter;
 import com.example.mobilebanking.helper.DatabaseHelper;
 import com.example.mobilebanking.model.Currency;
 import com.example.mobilebanking.model.Hesap;
 import com.example.mobilebanking.model.Musteri;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,7 +31,7 @@ public class AccountsFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private List<Hesap> items;
-    private MyAdapter adapter;
+    private AccountAdapter adapter;
 
     private Musteri musteri;
 
@@ -55,7 +56,7 @@ public class AccountsFragment extends Fragment {
 
         items = musteri.getHesaplar();
         databaseHelper = new DatabaseHelper(getContext());
-        adapter = new MyAdapter(getContext(), items);
+        adapter = new AccountAdapter(getContext(), items);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setAdapter(adapter);

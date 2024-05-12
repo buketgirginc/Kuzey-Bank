@@ -1,4 +1,4 @@
-package com.example.mobilebanking;
+package com.example.mobilebanking.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.mobilebanking.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;

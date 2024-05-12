@@ -1,4 +1,4 @@
-package com.example.mobilebanking;
+package com.example.mobilebanking.fragment;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
+import com.example.mobilebanking.R;
 import com.example.mobilebanking.adapter.PersonAdapter;
 import com.example.mobilebanking.helper.DatabaseHelper;
 import com.example.mobilebanking.model.Alici;
