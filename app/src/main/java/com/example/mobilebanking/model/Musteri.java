@@ -9,6 +9,7 @@ public class Musteri {
     private String musteriTC;
     private String musteriSifre;
     private List<Hesap> hesaplar;
+    private List<Alici> alicilar;
 
     public Musteri() {
     }
@@ -57,5 +58,13 @@ public class Musteri {
 
     public void setHesaplar(List<Hesap> hesaplar) {
         this.hesaplar = hesaplar;
+    }
+
+    public void setAlicilar(List<Alici> alicilar) {
+        this.alicilar = alicilar;
+    }
+
+    public List<Alici> getAlicilar() {
+        return alicilar;
     }
 }

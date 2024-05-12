@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.mobilebanking.model.Alici;
 import com.example.mobilebanking.model.Currency;
 import com.example.mobilebanking.model.Hesap;
 import com.example.mobilebanking.model.Islem;
@@ -51,6 +52,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "islemTarih DATE DEFAULT CURRENT_DATE," +
                 "FOREIGN KEY (hesapNo) REFERENCES hesaplar(hesapNo)," +
                 "FOREIGN KEY (islemTipi) REFERENCES islemTipleri(itNo));");
+
+        String createTableAlicilar = "CREATE TABLE IF NOT EXISTS alicilar (" +
+                "kayitNo INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "aliciAdi VARCHAR(30), " +
+                "aliciHesapNo INTEGER, " +
+                "musteriNo INTEGER, " +
+                "FOREIGN KEY (aliciHesapNo) REFERENCES hesaplar(hesapNo), " +
+                "FOREIGN KEY (musteriNo) REFERENCES musteriler(musteriNo)" +
+                ")";
+
+        db.execSQL(createTableAlicilar);
 
         // Tetikleyiciyi oluşturma sorgusunu ekleyin
         db.execSQL("CREATE TRIGGER IF NOT EXISTS yeni_musteri_trigger AFTER INSERT ON musteriler " +
@@ -185,7 +197,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             });
 
             musteri.setHesaplar(hesaplar);
-
+            musteri.setAlicilar(getAlicilarByMusteriNo(musteri.getMusteriNo()));
         }
 
         if (cursor != null) {
@@ -197,6 +209,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return musteri;
     }
 
+    // Tablo ve sütun isimleri
+    private static final String TABLE_ALICILAR = "alicilar";
+    private static final String COLUMN_KAYIT_NO = "kayitNo";
+    private static final String COLUMN_ALICI_ADI = "aliciAdi";
+    private static final String COLUMN_ALICI_HESAP_NO = "aliciHesapNo";
+    private static final String COLUMN_MUSTERI_NO = "musteriNo";
+
+    public List<Alici> getAlicilarByMusteriNo(int musteriNo) {
+        List<Alici> alicilar = new ArrayList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        String[] columns = {COLUMN_KAYIT_NO, COLUMN_ALICI_ADI, COLUMN_ALICI_HESAP_NO, COLUMN_MUSTERI_NO};
+        String selection = COLUMN_MUSTERI_NO + "=?";
+        String[] selectionArgs = {String.valueOf(musteriNo)};
+        Cursor cursor = db.query(TABLE_ALICILAR, columns, selection, selectionArgs, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Alici alici = new Alici();
+                alici.setKayitNo(cursor.getInt(cursor.getColumnIndex(COLUMN_KAYIT_NO)));
+                alici.setAliciAdi(cursor.getString(cursor.getColumnIndex(COLUMN_ALICI_ADI)));
+                alici.setAliciHesapNo(cursor.getInt(cursor.getColumnIndex(COLUMN_ALICI_HESAP_NO)));
+                alici.setMusteriNo(cursor.getInt(cursor.getColumnIndex(COLUMN_MUSTERI_NO)));
+                alicilar.add(alici);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return alicilar;
+    }
+
+
     public void updateMusteriSifre(int musteriNo, String yeniSifre) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -204,6 +248,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int affectedRows = db.update("musteriler", values, "musteriNo" + " = ?",
                 new String[]{String.valueOf(musteriNo)});
         db.close();
+    }
+
+    public long addHesap(Hesap hesap) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("hesapAdi", hesap.getHesapAdi());
+        values.put("hesapDovizTipi", hesap.getHesapDovizTipi().getValue());
+        values.put("hesapBakiye", hesap.getHesapBakiye());
+        values.put("musteriNo", hesap.getMusteriNo());
+
+        long result = db.insert("hesaplar", null, values);
+        db.close();
+        return result;
+    }
+
+    public long addAlici(Alici alici) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("aliciAdi", alici.getAliciAdi());
+        values.put("aliciHesapNo", alici.getAliciHesapNo());
+        values.put("musteriNo", alici.getMusteriNo());
+
+        long result = db.insert("alicilar", null, values);
+        db.close();
+        return result;
     }
 
 

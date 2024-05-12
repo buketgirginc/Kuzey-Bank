@@ -17,6 +17,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 
+import com.example.mobilebanking.helper.DatabaseHelper;
+import com.example.mobilebanking.model.Currency;
+import com.example.mobilebanking.model.Hesap;
+import com.example.mobilebanking.model.Musteri;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,24 +29,20 @@ import java.util.List;
 public class AccountsFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private List<AccountItem> items;
+    private List<Hesap> items;
     private MyAdapter adapter;
 
-    public AccountsFragment() {
-        // Required empty public constructor
-    }
+    private Musteri musteri;
 
-    public static AccountsFragment newInstance(String param1, String param2) {
-        AccountsFragment fragment = new AccountsFragment();
-        Bundle args = new Bundle();
-        return fragment;
+    private DatabaseHelper databaseHelper;
+
+    public AccountsFragment(Musteri musteri) {
+        this.musteri = musteri;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -53,9 +53,8 @@ public class AccountsFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.accountsRecyclerView);
 
-        items = new ArrayList<AccountItem>();
-        items.add(new AccountItem(1, "Buket", "100"));
-
+        items = musteri.getHesaplar();
+        databaseHelper = new DatabaseHelper(getContext());
         adapter = new MyAdapter(getContext(), items);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
@@ -87,8 +86,16 @@ public class AccountsFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String accountName = accountNameEditText.getText().toString();
-                String currency = getSelectedCurrency(currencyRadioGroup);
-                items.add(new AccountItem(items.size() + 1, accountName, currency));
+                Currency currency = getSelectedCurrency(currencyRadioGroup);
+                Hesap yeniHesap = new Hesap();
+                yeniHesap.setMusteriNo(musteri.getMusteriNo());
+                yeniHesap.setHesapAdi(accountName);
+                yeniHesap.setHesapBakiye(0.00f);
+                yeniHesap.setHesapDovizTipi(currency);
+                databaseHelper.addHesap(yeniHesap);
+                musteri = databaseHelper.selectMusteri(String.valueOf(musteri.getMusteriNo()));
+                items = musteri.getHesaplar();
+                adapter.items = items;
                 adapter.notifyDataSetChanged();
             }
         });
@@ -104,13 +111,14 @@ public class AccountsFragment extends Fragment {
         dialog.show();
     }
 
-    private String getSelectedCurrency(RadioGroup currencyRadioGroup) {
+    private Currency getSelectedCurrency(RadioGroup currencyRadioGroup) {
         int selectedId = currencyRadioGroup.getCheckedRadioButtonId();
         if (selectedId != -1) {
             RadioButton selectedRadioButton = currencyRadioGroup.findViewById(selectedId);
-            return selectedRadioButton.getText().toString();
+            Currency currency = Currency.fromName(selectedRadioButton.getText().toString());
+            return currency;
         }
-        return ""; // Default olarak boş bir döviz tipi döndürülebilir
+        return null;
     }
 
 }

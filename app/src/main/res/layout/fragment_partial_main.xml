@@ -172,7 +172,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView9">
 
-            <include layout="@layout/partial_action" />
+            <include android:id="@+id/partialAction" layout="@layout/partial_action" />
         </HorizontalScrollView>
 
         <TextView

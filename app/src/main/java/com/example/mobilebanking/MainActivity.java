@@ -27,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+            musteriGuncelle();
+
             switch (item.getItemId()) {
                 case R.id.menuHome:
                     // Ana sayfayı aç
@@ -50,6 +53,10 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     };
+
+    private void musteriGuncelle(){
+        musteri = databaseHelper.selectMusteri(String.valueOf(musteri.getMusteriNo()));
+    }
 
     private Musteri musteri;
     private Hesap anaHesap;
@@ -85,12 +92,13 @@ public class MainActivity extends AppCompatActivity {
         fb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                musteriGuncelle();
                 openAccountsFragment();
             }
         });
     }
     private void openHomeFragment() {
-        openFragment(new PartialMainFragment(anaHesap));
+        openFragment(new PartialMainFragment(anaHesap, musteri));
     }
 
     private void openCurrencyFragment() {
@@ -102,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openAccountsFragment() {
-        openFragment(new AccountsFragment());
+        openFragment(new AccountsFragment(musteri));
     }
 
     private void openFragment(Fragment fragment){

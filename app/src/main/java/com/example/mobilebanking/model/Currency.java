@@ -29,4 +29,13 @@ public enum Currency {
         }
         throw new IllegalArgumentException("Geçersiz para birimi değeri: " + value);
     }
+
+    public static Currency fromName(String name) {
+        for (Currency currency : Currency.values()) {
+            if (currency.getName().equals(name)) {
+                return currency;
+            }
+        }
+        throw new IllegalArgumentException("Geçersiz para birimi adı: " + name);
+    }
 }

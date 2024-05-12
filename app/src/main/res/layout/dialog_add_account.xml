@@ -21,19 +21,19 @@
         android:id="@+id/tryRadioButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TRY" />
+        android:text=" TL" />
 
     <RadioButton
         android:id="@+id/usdRadioButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="USD" />
+        android:text=" $" />
 
     <RadioButton
         android:id="@+id/eurRadioButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="EUR" />
+        android:text=" €" />
 
 
     </RadioGroup>
