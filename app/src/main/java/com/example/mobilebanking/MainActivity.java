@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.mobilebanking.helper.SessionManager;
+import com.example.mobilebanking.model.Hesap;
 import com.example.mobilebanking.model.Musteri;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private Musteri musteri;
+    private Hesap anaHesap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         musteri = SessionManager.getUser(this);
+        anaHesap = musteri.getHesaplar().get(0);
 
         setContentView(R.layout.activity_main);
 
@@ -69,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         openHomeFragment();
     }
     private void openHomeFragment() {
-        openFragment(new PartialMainFragment());
+        openFragment(new PartialMainFragment(anaHesap));
     }
 
     private void openCurrencyFragment() {

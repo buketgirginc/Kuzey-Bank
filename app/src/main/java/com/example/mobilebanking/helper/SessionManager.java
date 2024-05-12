@@ -38,7 +38,7 @@ public class SessionManager {
 
         // Şimdi, SQLite veritabanından kullanıcıyı müşteri numarasına göre getir
         DatabaseHelper helper = new DatabaseHelper(context);
-
-        return helper.selectMusteri(getSessionId(context));
+        Musteri musteri = helper.selectMusteri(getSessionId(context));
+        return musteri;
     }
 }
