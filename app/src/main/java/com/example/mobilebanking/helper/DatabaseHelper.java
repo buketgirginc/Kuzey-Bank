@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.mobilebanking.model.Currency;
 import com.example.mobilebanking.model.Hesap;
+import com.example.mobilebanking.model.Islem;
 import com.example.mobilebanking.model.Musteri;
 
 import java.util.ArrayList;
@@ -152,6 +153,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             if (cursorHesap != null) {
                 cursorHesap.close();
             }
+
+            hesaplar.forEach(hesap -> {
+                // Ait hesapları getir
+                String[] islemColumns = {"islemNo", "hesapNo", "islemMiktar", "islemTipi", "islemTarih"};
+                String islemSelection = "hesapNo=?";
+                String[] islemSelectionArgs = {String.valueOf(hesap.getHesapNo())};
+
+                Cursor cursorIslem = db.query("islemler", islemColumns, islemSelection, islemSelectionArgs, null, null, null);
+
+                List<Islem> islemler = new ArrayList<Islem>();
+
+                if (cursorIslem != null && cursorIslem.moveToFirst()) {
+                    do {
+                        Islem islem = new Islem();
+                        islem.setIslemNo(cursorIslem.getInt(cursorIslem.getColumnIndex("islemNo")));
+                        islem.setIslemTipi(cursorIslem.getInt(cursorIslem.getColumnIndex("islemTipi")));
+                        islem.setHesapNo(cursorIslem.getInt(cursorIslem.getColumnIndex("hesapNo")));
+                        islem.setIslemMiktar(cursorIslem.getFloat(cursorIslem.getColumnIndex("islemMiktar")));
+                        islem.setIslemTarih(null);
+                        islemler.add(islem);
+                    } while (cursorIslem.moveToNext());
+                }
+
+                if (cursorIslem != null) {
+                    cursorIslem.close();
+                }
+
+                hesap.setIslemler(islemler);
+
+            });
 
             musteri.setHesaplar(hesaplar);
 

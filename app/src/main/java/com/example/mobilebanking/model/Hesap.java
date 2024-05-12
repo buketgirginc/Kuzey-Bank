@@ -1,11 +1,14 @@
 package com.example.mobilebanking.model;
 
+import java.util.List;
+
 public class Hesap {
     private int hesapNo;
     private String hesapAdi;
     private Currency hesapDovizTipi;
     private float hesapBakiye;
     private int musteriNo;
+    private List<Islem> islemler;
 
     public Hesap(){
 
@@ -57,6 +60,14 @@ public class Hesap {
 
     public void setMusteriNo(int musteriNo) {
         this.musteriNo = musteriNo;
+    }
+
+    public void setIslemler(List<Islem> islemler) {
+        this.islemler = islemler;
+    }
+
+    public List<Islem> getIslemler() {
+        return islemler;
     }
 }
 
