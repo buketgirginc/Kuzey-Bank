@@ -3,6 +3,7 @@ package com.example.mobilebanking;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,9 +48,12 @@ public class SignupPageActivity extends AppCompatActivity {
                 Musteri musteri = new Musteri(fullname, tc, sifre);
 
                 if (databaseHelper.addMusteri(musteri) != -1){
-                    System.out.println("Eklendi");
+                    Toast.makeText(SignupPageActivity.this, "Kayıt başarılı.", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(SignupPageActivity.this, LoginPage.class);
+                    startActivity(intent);
+                    finish();
                 } else {
-                    System.out.println("Hata");
+                    Toast.makeText(SignupPageActivity.this, "Kayıt olunamadı.", Toast.LENGTH_LONG).show();
                 }
             }
         });

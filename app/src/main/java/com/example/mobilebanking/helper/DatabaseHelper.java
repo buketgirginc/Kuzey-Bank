@@ -6,7 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.mobilebanking.model.Currency;
+import com.example.mobilebanking.model.Hesap;
 import com.example.mobilebanking.model.Musteri;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "kuzeybank.db";
@@ -52,6 +57,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "INSERT INTO hesaplar (hesapAdi, hesapBakiye, musteriNo, hesapDovizTipi) " +
                 "VALUES (NEW.musteriFullname, 0, NEW.musteriNo, 1);" +
                 "END;");
+
+        //db.execSQL("UPDATE SQLITE_SEQUENCE SET seq = 86630014 WHERE name = 'hesaplar'");
     }
 
     @Override
@@ -119,6 +126,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             musteri.setMusteriFullname(cursor.getString(cursor.getColumnIndex("musteriFullname")));
             musteri.setMusteriTC(cursor.getString(cursor.getColumnIndex("musteriTC")));
             musteri.setMusteriSifre(cursor.getString(cursor.getColumnIndex("musteriSifre")));
+
+            // Ait hesapları getir
+            String[] hesapColumns = {"hesapNo", "hesapAdi", "hesapDovizTipi", "hesapBakiye", "musteriNo"};
+            String hesapSelection = "musteriNo=?";
+            String[] hesapSelectionArgs = {musteriNo};
+
+            Cursor cursorHesap = db.query("hesaplar", hesapColumns, hesapSelection, hesapSelectionArgs, null, null, null);
+
+            List<Hesap> hesaplar = new ArrayList<Hesap>();
+
+            if (cursorHesap != null && cursorHesap.moveToFirst()) {
+                do {
+                    Hesap hesap = new Hesap();
+                    hesap.setHesapNo(cursorHesap.getInt(cursorHesap.getColumnIndex("hesapNo")));
+                    hesap.setHesapAdi(cursorHesap.getString(cursorHesap.getColumnIndex("hesapAdi")));
+                    hesap.setHesapDovizTipi(Currency.fromValue(cursorHesap.getInt(cursorHesap.getColumnIndex("hesapDovizTipi"))));
+                    hesap.setHesapBakiye(cursorHesap.getFloat(cursorHesap.getColumnIndex("hesapBakiye")));
+                    hesap.setMusteriNo(cursorHesap.getInt(cursorHesap.getColumnIndex("musteriNo")));
+
+                    hesaplar.add(hesap);
+                } while (cursorHesap.moveToNext());
+            }
+
+            if (cursorHesap != null) {
+                cursorHesap.close();
+            }
+
+            musteri.setHesaplar(hesaplar);
+
         }
 
         if (cursor != null) {
