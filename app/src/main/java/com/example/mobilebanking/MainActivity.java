@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.mobilebanking.helper.DatabaseHelper;
 import com.example.mobilebanking.helper.SessionManager;
 import com.example.mobilebanking.model.Hesap;
 import com.example.mobilebanking.model.Musteri;
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
     private Musteri musteri;
     private Hesap anaHesap;
 
+    private DatabaseHelper databaseHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         musteri = SessionManager.getUser(this);
         anaHesap = musteri.getHesaplar().get(0);
-
+        databaseHelper = new DatabaseHelper(this);
         setContentView(R.layout.activity_main);
 
         BottomNavigationView navigation = findViewById(R.id.bottomNavigationView);
@@ -80,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openProfileFragment() {
-        openFragment(new ProfileFragment());
+        openFragment(new ProfileFragment(musteri, databaseHelper));
     }
 
     private void openFragment(Fragment fragment){

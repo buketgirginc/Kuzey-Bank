@@ -166,5 +166,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return musteri;
     }
 
+    public void updateMusteriSifre(int musteriNo, String yeniSifre) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("musteriSifre", yeniSifre);
+        int affectedRows = db.update("musteriler", values, "musteriNo" + " = ?",
+                new String[]{String.valueOf(musteriNo)});
+        db.close();
+    }
+
 
 }
