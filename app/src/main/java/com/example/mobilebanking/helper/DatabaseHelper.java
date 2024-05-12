@@ -102,5 +102,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return musteri;
     }
 
+    public Musteri selectMusteri(String musteriNo) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Musteri musteri = null;
+
+        // Sorguyu hazırla
+        String[] columns = {"musteriNo", "musteriFullname", "musteriTC", "musteriSifre"};
+        String selection = "musteriNo=?";
+        String[] selectionArgs = {musteriNo};
+
+        Cursor cursor = db.query("musteriler", columns, selection, selectionArgs, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            musteri = new Musteri();
+            musteri.setMusteriNo(cursor.getInt(cursor.getColumnIndex("musteriNo")));
+            musteri.setMusteriFullname(cursor.getString(cursor.getColumnIndex("musteriFullname")));
+            musteri.setMusteriTC(cursor.getString(cursor.getColumnIndex("musteriTC")));
+            musteri.setMusteriSifre(cursor.getString(cursor.getColumnIndex("musteriSifre")));
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+
+        db.close();
+
+        return musteri;
+    }
+
 
 }

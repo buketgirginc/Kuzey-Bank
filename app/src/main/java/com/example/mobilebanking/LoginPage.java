@@ -1,6 +1,7 @@
 package com.example.mobilebanking;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mobilebanking.databinding.ActivityLoginPageBinding;
 import com.example.mobilebanking.helper.DatabaseHelper;
+import com.example.mobilebanking.helper.SessionManager;
 import com.example.mobilebanking.model.Musteri;
 import com.example.mobilebanking.utils.MyAlertDialog;
 
@@ -18,9 +20,16 @@ public class LoginPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         databaseHelper = new DatabaseHelper(this);
+
+        if (SessionManager.isLoggedIn(this)) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
         binding = ActivityLoginPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
 
         binding.login.setOnClickListener(v -> {
             String tc = binding.username.getText().toString();
@@ -38,11 +47,10 @@ public class LoginPage extends AppCompatActivity {
                 return;
             }
 
-            System.out.println("Giriş yapıldı. Hoş geldin " + currentMusteri.getMusteriFullname());
-
+            SessionManager.login(this, String.valueOf(currentMusteri.getMusteriNo()));
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
-
+            finish();
         });
 
         binding.goToSignUp.setOnClickListener( v -> {

@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.mobilebanking.helper.SessionManager;
+import com.example.mobilebanking.model.Musteri;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
@@ -34,15 +36,30 @@ public class MainActivity extends AppCompatActivity {
                     return true;
 
                 default:
+                    SessionManager.logout(MainActivity.this);
                     Intent intent = new Intent(MainActivity.this, LoginPage.class);
                     startActivity(intent);
+                    finish();
             }
             return false;
         }
     };
+
+    private Musteri musteri;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (!SessionManager.isLoggedIn(this)) {
+            Intent intent = new Intent(this, LoginPage.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
+        musteri = SessionManager.getUser(this);
+
         setContentView(R.layout.activity_main);
 
         BottomNavigationView navigation = findViewById(R.id.bottomNavigationView);
