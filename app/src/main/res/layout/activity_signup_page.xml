@@ -20,15 +20,15 @@
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="120dp"
             android:src="@drawable/logo"
             />
         <EditText
             android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:paddingVertical="30dp"
+            android:layout_marginTop="0dp"
+            android:paddingVertical="25dp"
             android:hint="TC Kimlik No"
             android:maxLength="11"
             android:selectAllOnFocus="true"
@@ -38,7 +38,7 @@
             android:id="@+id/fullname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="30dp"
+            android:paddingVertical="25dp"
             android:hint="Ad Soyad"
             android:maxLength="30"
             />
@@ -47,9 +47,8 @@
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:hint="Şifre"
-            android:paddingVertical="30dp"
+            android:paddingVertical="25dp"
             android:inputType="numberPassword"
             android:maxLength="6"
 
@@ -68,10 +67,30 @@
             android:layout_height="wrap_content"
             android:paddingVertical="20dp"
             android:layout_gravity="start"
-            android:layout_marginTop="16dp"
+            android:layout_marginVertical="10dp"
             android:text="Kayıt Ol"
             android:textColor="@color/white"
             android:backgroundTint="@color/light_blue"
+            />
+
+        <TextView
+            android:layout_marginVertical="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kayıtlı mısınız?"
+            android:textAlignment="center"
+            />
+
+        <TextView
+            android:id="@+id/goToLogIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="10dp"
+            android:textAlignment="center"
+            android:text="GİRİŞ YAP"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/light_blue"
             />
     </LinearLayout>
 

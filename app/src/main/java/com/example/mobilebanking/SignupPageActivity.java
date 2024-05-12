@@ -1,5 +1,6 @@
 package com.example.mobilebanking;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -51,6 +52,11 @@ public class SignupPageActivity extends AppCompatActivity {
                     System.out.println("Hata");
                 }
             }
+        });
+
+        binding.goToLogIn.setOnClickListener( v -> {
+            Intent intent = new Intent(this, LoginPage.class);
+            startActivity(intent);
         });
     }
 }
