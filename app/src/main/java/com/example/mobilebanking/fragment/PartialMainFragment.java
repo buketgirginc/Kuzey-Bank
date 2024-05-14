@@ -25,6 +25,7 @@ import java.text.DecimalFormat;
 
 public class PartialMainFragment extends Fragment {
 
+    AlertDialog alertDialog;
     private Hesap hesap;
     private Musteri musteri;
 
@@ -93,21 +94,17 @@ public class PartialMainFragment extends Fragment {
         View dialogView = inflater.inflate(R.layout.dialog_transfer_type, null);
         builder.setView(dialogView);
 
-
         Button hesaplarArasiTransferBtn = dialogView.findViewById(R.id.hesaplarArasiTransferBtn);
         Button baskaHesabaHavaleBtn = dialogView.findViewById(R.id.baskaHesabaHavaleBtn);
-
 
         hesaplarArasiTransferBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Toast.makeText(getContext(), "Hesaplar Arası Transfer seçildi.", Toast.LENGTH_SHORT).show();
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container, new TransferBetweenAccountsFragment());
                 transaction.addToBackStack(null);
                 transaction.commit();
+                alertDialog.dismiss();
             }
         });
 
@@ -115,19 +112,17 @@ public class PartialMainFragment extends Fragment {
         baskaHesabaHavaleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Toast.makeText(getContext(), "Başka Hesaba Havale seçildi.", Toast.LENGTH_SHORT).show();
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container, new TransferToOtherFragment());
                 transaction.addToBackStack(null);
                 transaction.commit();
+                alertDialog.dismiss();
             }
         });
 
 
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        alertDialog= builder.create();
+        alertDialog.show();
     }
 
     private void copyToClipboard(String metin) {
