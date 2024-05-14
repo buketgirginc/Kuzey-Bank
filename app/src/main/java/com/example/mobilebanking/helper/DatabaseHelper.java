@@ -10,19 +10,27 @@ import com.example.mobilebanking.model.Alici;
 import com.example.mobilebanking.model.Currency;
 import com.example.mobilebanking.model.Hesap;
 import com.example.mobilebanking.model.Islem;
+import com.example.mobilebanking.model.IslemTipi;
 import com.example.mobilebanking.model.Musteri;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "kuzeybank.db";
     public static final int DATABASE_VERSION = 1;
+    List<IslemTipi> islemTipleri = new ArrayList<>();
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        islemTipleri.add(new IslemTipi(1, "Para Yatırma", "#188e1f"));
+        islemTipleri.add(new IslemTipi(2, "Para Çekme", "#8e2f18"));
+        islemTipleri.add(new IslemTipi(3, "Döviz Satım", "#188e1f"));
+        islemTipleri.add(new IslemTipi(4, "Döviz Alım", "#8e2f18"));
     }
 
     @Override
@@ -105,7 +113,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Musteri selectMusteri(String musteriTC, String musteriSifre) {
         SQLiteDatabase db = this.getReadableDatabase();
         Musteri musteri = null;
-
         // Sorguyu hazırla
         String[] columns = {"musteriNo", "musteriFullname", "musteriTC", "musteriSifre"};
         String selection = "musteriTC=? AND musteriSifre=?";
@@ -131,6 +138,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
         return musteri;
+    }
+
+    public IslemTipi getIslemTipi(int id) {
+        for (IslemTipi eleman : islemTipleri) {
+            if (eleman.getItNo() == id) {
+                return eleman;
+            }
+        }
+        return null;
     }
 
     public Musteri selectMusteri(String musteriNo) {
@@ -191,8 +207,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     do {
                         Islem islem = new Islem();
                         islem.setIslemNo(cursorIslem.getInt(cursorIslem.getColumnIndex("islemNo")));
-                        islem.setIslemTipi(cursorIslem.getInt(cursorIslem.getColumnIndex("islemTipi")));
-                        islem.setHesapNo(cursorIslem.getInt(cursorIslem.getColumnIndex("hesapNo")));
+                        islem.setIslemTipi(getIslemTipi(cursorIslem.getInt(cursorIslem.getColumnIndex("islemTipi"))));
+                        islem.setHesap(hesap);
                         islem.setIslemMiktar(cursorIslem.getFloat(cursorIslem.getColumnIndex("islemMiktar")));
                         islem.setIslemTarih(null);
                         islemler.add(islem);
@@ -217,6 +233,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Collections.sort(tumIslemler,byDate);
 
             List<Islem> son20Islem = tumIslemler.subList(0, Math.min(20, tumIslemler.size()));
+
             musteri.setSonIslemler(son20Islem);
             musteri.setHesaplar(hesaplar);
             musteri.setAlicilar(getAlicilarByMusteriNo(musteri.getMusteriNo()));

@@ -16,9 +16,14 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobilebanking.R;
+import com.example.mobilebanking.adapter.ActivityAdapter;
+import com.example.mobilebanking.adapter.PersonAdapter;
 import com.example.mobilebanking.model.Hesap;
+import com.example.mobilebanking.model.Islem;
 import com.example.mobilebanking.model.Musteri;
 
 import java.text.DecimalFormat;
@@ -29,6 +34,7 @@ public class PartialMainFragment extends Fragment {
     AlertDialog alertDialogCurrency;
     private Hesap hesap;
     private Musteri musteri;
+
 
     public PartialMainFragment(Hesap hesap, Musteri musteri) {
         this.hesap = hesap;
@@ -45,6 +51,11 @@ public class PartialMainFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_partial_main, container, false);
         View actions = view.findViewById(R.id.partialAction);
+
+        RecyclerView recyclerView = view.findViewById(R.id.activitiesRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        ActivityAdapter adapter = new ActivityAdapter(getContext(), musteri.getSonIslemler());
+        recyclerView.setAdapter(adapter);
 
         TextView bakiye = view.findViewById(R.id.bakiye);
         TextView hesapNo = view.findViewById(R.id.hesapNoText);
