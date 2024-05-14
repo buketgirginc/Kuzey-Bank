@@ -30,6 +30,7 @@
             android:layout_marginTop="0dp"
             android:paddingVertical="25dp"
             android:hint="TC Kimlik No"
+            android:inputType=""
             android:maxLength="11"
             android:selectAllOnFocus="true"
             />

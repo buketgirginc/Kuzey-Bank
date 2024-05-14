@@ -26,6 +26,7 @@ import java.text.DecimalFormat;
 public class PartialMainFragment extends Fragment {
 
     AlertDialog alertDialog;
+    AlertDialog alertDialogCurrency;
     private Hesap hesap;
     private Musteri musteri;
 
@@ -66,6 +67,7 @@ public class PartialMainFragment extends Fragment {
 
         ImageButton alicilarBtn = actions.findViewById(R.id.imageButton3);
         ImageButton transferBtn = actions.findViewById(R.id.imageButton);
+        ImageButton dovizBtn = actions.findViewById(R.id.imageButton2);
 
         alicilarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,8 +86,16 @@ public class PartialMainFragment extends Fragment {
             }
         });
 
+        dovizBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCurrencyDialog();
+            }
+        });
+
         return view;
     }
+
 
 
     private void showTransferDialog() {
@@ -97,8 +107,9 @@ public class PartialMainFragment extends Fragment {
         Button hesaplarArasiTransferBtn = dialogView.findViewById(R.id.hesaplarArasiTransferBtn);
         Button baskaHesabaHavaleBtn = dialogView.findViewById(R.id.baskaHesabaHavaleBtn);
 
-        alertDialog= builder.create();
+        alertDialog = builder.create();
         alertDialog.show();
+
 
         hesaplarArasiTransferBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +134,44 @@ public class PartialMainFragment extends Fragment {
 
             }
         });
+
+    }
+
+    private void showCurrencyDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        LayoutInflater inflater = requireActivity().getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_currency_op_type, null);
+        builder.setView(dialogView);
+
+        Button dovizAlBtn = dialogView.findViewById(R.id.dovizAlBtn);
+        Button dovizSatBtn = dialogView.findViewById(R.id.dovizSatBtn);
+
+        alertDialogCurrency= builder.create();
+        alertDialogCurrency.show();
+
+        dovizAlBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, new BuyCurrencyFragment());
+                transaction.addToBackStack(null);
+                transaction.commit();
+                if(alertDialogCurrency!=null)alertDialogCurrency.dismiss();
+            }
+        });
+
+
+        dovizSatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, new SellCurrencyFragment());
+                transaction.addToBackStack(null);
+                transaction.commit();
+                if(alertDialogCurrency!=null)alertDialogCurrency.dismiss();
+            }
+        });
+
 
     }
 
