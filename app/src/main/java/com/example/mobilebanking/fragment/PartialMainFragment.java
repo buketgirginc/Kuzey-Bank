@@ -2,13 +2,10 @@ package com.example.mobilebanking.fragment;
 
 import static androidx.core.content.ContextCompat.getSystemService;
 
+import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +13,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.mobilebanking.R;
 import com.example.mobilebanking.model.Hesap;
@@ -29,7 +29,6 @@ public class PartialMainFragment extends Fragment {
     private Musteri musteri;
 
     public PartialMainFragment(Hesap hesap, Musteri musteri) {
-        // Required empty public constructor
         this.hesap = hesap;
         this.musteri = musteri;
     }
@@ -54,7 +53,6 @@ public class PartialMainFragment extends Fragment {
         bakiye.setText(String.format("%s %s", bicimliSayi, hesap.getHesapDovizTipi().getName()));
         hesapNo.setText(String.valueOf(hesap.getHesapNo()));
         isim.setText(hesap.getHesapAdi());
-
         Button kopyalaButon = view.findViewById(R.id.copyButton);
 
         kopyalaButon.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +62,10 @@ public class PartialMainFragment extends Fragment {
             }
         });
 
+
         ImageButton alicilarBtn = actions.findViewById(R.id.imageButton3);
+        ImageButton transferBtn = actions.findViewById(R.id.imageButton);
+
         alicilarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,8 +76,58 @@ public class PartialMainFragment extends Fragment {
             }
         });
 
-        return view;
+        transferBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTransferDialog();
+            }
+        });
 
+        return view;
+    }
+
+
+    private void showTransferDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        LayoutInflater inflater = requireActivity().getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_transfer_type, null);
+        builder.setView(dialogView);
+
+
+        Button hesaplarArasiTransferBtn = dialogView.findViewById(R.id.hesaplarArasiTransferBtn);
+        Button baskaHesabaHavaleBtn = dialogView.findViewById(R.id.baskaHesabaHavaleBtn);
+
+
+        hesaplarArasiTransferBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(getContext(), "Hesaplar Arası Transfer seçildi.", Toast.LENGTH_SHORT).show();
+
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, new TransferBetweenAccountsFragment());
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+
+
+        baskaHesabaHavaleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(getContext(), "Başka Hesaba Havale seçildi.", Toast.LENGTH_SHORT).show();
+
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, new TransferToOtherFragment());
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void copyToClipboard(String metin) {
