@@ -65,13 +65,25 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toTopOf="@+id/view" />
+    <TextView
+        android:id="@+id/hesapNoText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:letterSpacing=".3"
+        android:text="2459702663"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/hesapNo" />
 
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/copyButton"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="50dp"
         android:layout_marginEnd="8dp"
         android:padding="0dp"
         android:text="Kopyala"

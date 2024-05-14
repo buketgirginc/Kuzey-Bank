@@ -67,8 +67,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Tetikleyiciyi oluşturma sorgusunu ekleyin
         db.execSQL("CREATE TRIGGER IF NOT EXISTS yeni_musteri_trigger AFTER INSERT ON musteriler " +
                 "BEGIN " +
-                "INSERT INTO hesaplar (hesapAdi, hesapBakiye, musteriNo, hesapDovizTipi) " +
-                "VALUES (NEW.musteriFullname, 0, NEW.musteriNo, 1);" +
+                "INSERT INTO hesaplar (hesapNo, hesapAdi, hesapBakiye, musteriNo, hesapDovizTipi) " +
+                "VALUES (NEW.musteriNo + 834521,NEW.musteriFullname, 10000, NEW.musteriNo, 1);" +
                 "END;");
 
         //db.execSQL("UPDATE SQLITE_SEQUENCE SET seq = 86630014 WHERE name = 'hesaplar'");

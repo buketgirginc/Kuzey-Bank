@@ -28,6 +28,7 @@ public class SignupPageActivity extends AppCompatActivity {
                 String fullname = binding.fullname.getText().toString();
                 String tc = binding.username.getText().toString();
                 String sifre = binding.password.getText().toString();
+                Boolean sozlesme = binding.agreement.isChecked();
 
                 if (fullname.trim().length() < 5 || fullname.trim().length() > 30){
                     MyAlertDialog.showAlertDialog(v.getContext(), "Hata","İsminiz 5-30 karakter arası olmalı");
@@ -41,6 +42,11 @@ public class SignupPageActivity extends AppCompatActivity {
 
                 if (sifre.trim().length() != 6){
                     MyAlertDialog.showAlertDialog(v.getContext(), "Hata","Sifre 6 karakter olmalı");
+                    return;
+                }
+
+                if (!sozlesme){
+                    MyAlertDialog.showAlertDialog(v.getContext(), "Hata","Lütfen sözleşmeyi kabul edin.");
                     return;
                 }
 

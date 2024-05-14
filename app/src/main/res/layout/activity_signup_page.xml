@@ -54,6 +54,7 @@
 
             />
         <CheckBox
+            android:id="@+id/agreement"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Mobil bankacılık, üyelik, gizlilik sözleşmelerini kabul ediyorum."
