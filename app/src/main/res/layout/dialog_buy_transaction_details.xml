@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="30dp"
+    android:padding="16dp"
+    >
+
+
+        <TextView
+            android:id="@+id/labelCurToBuy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Alınacak Döviz Seçimi:"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp" />
+
+    <TextView
+        android:id="@+id/textViewCurAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chosen Currency Account"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp" />
+
+
+        <TextView
+            android:id="@+id/labelTLAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TL Hesabı Seçimi"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp" />
+
+    <TextView
+        android:id="@+id/textViewTLAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chosen TL Account"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp" />
+
+        <TextView
+            android:id="@+id/labelAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Tutar Girişi:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:padding="5dp"
+           />
+
+        <TextView
+            android:id="@+id/textViewAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ChosenAmount"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp" />
+
+        <Button
+            android:id="@+id/buttonConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Onayla"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp" />
+
+
+
+</LinearLayout>
