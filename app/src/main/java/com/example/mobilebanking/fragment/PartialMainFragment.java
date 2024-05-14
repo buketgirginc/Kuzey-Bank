@@ -97,6 +97,9 @@ public class PartialMainFragment extends Fragment {
         Button hesaplarArasiTransferBtn = dialogView.findViewById(R.id.hesaplarArasiTransferBtn);
         Button baskaHesabaHavaleBtn = dialogView.findViewById(R.id.baskaHesabaHavaleBtn);
 
+        alertDialog= builder.create();
+        alertDialog.show();
+
         hesaplarArasiTransferBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,7 +107,7 @@ public class PartialMainFragment extends Fragment {
                 transaction.replace(R.id.fragment_container, new TransferBetweenAccountsFragment());
                 transaction.addToBackStack(null);
                 transaction.commit();
-                alertDialog.dismiss();
+                if (alertDialog!=null) alertDialog.dismiss();
             }
         });
 
@@ -116,13 +119,11 @@ public class PartialMainFragment extends Fragment {
                 transaction.replace(R.id.fragment_container, new TransferToOtherFragment());
                 transaction.addToBackStack(null);
                 transaction.commit();
-                alertDialog.dismiss();
+                if (alertDialog!=null) alertDialog.dismiss();
+
             }
         });
 
-
-        alertDialog= builder.create();
-        alertDialog.show();
     }
 
     private void copyToClipboard(String metin) {
