@@ -2,18 +2,18 @@ package com.example.mobilebanking.model;
 import java.util.Date;
 public class Islem {
     private int islemNo;
-    private int hesapNo;
+    private Hesap hesap;
     private float islemMiktar;
-    private int islemTipi;
+    private IslemTipi islemTipi;
     private Date islemTarih;
 
     public Islem(){
 
     }
 
-    public Islem(int islemNo, int hesapNo, float islemMiktar, int islemTipi, Date islemTarih) {
+    public Islem(int islemNo, Hesap hesap, float islemMiktar, IslemTipi islemTipi, Date islemTarih) {
         this.islemNo = islemNo;
-        this.hesapNo = hesapNo;
+        this.hesap = hesap;
         this.islemMiktar = islemMiktar;
         this.islemTipi = islemTipi;
         this.islemTarih = islemTarih;
@@ -27,12 +27,12 @@ public class Islem {
         this.islemNo = islemNo;
     }
 
-    public int getHesapNo() {
-        return hesapNo;
+    public Hesap getHesap() {
+        return hesap;
     }
 
-    public void setHesapNo(int hesapNo) {
-        this.hesapNo = hesapNo;
+    public void setHesap(Hesap hesap) {
+        this.hesap = hesap;
     }
 
     public float getIslemMiktar() {
@@ -43,11 +43,11 @@ public class Islem {
         this.islemMiktar = islemMiktar;
     }
 
-    public int getIslemTipi() {
+    public IslemTipi getIslemTipi() {
         return islemTipi;
     }
 
-    public void setIslemTipi(int islemTipi) {
+    public void setIslemTipi(IslemTipi islemTipi) {
         this.islemTipi = islemTipi;
     }
 
