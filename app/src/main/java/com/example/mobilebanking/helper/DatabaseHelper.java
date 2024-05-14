@@ -13,6 +13,8 @@ import com.example.mobilebanking.model.Islem;
 import com.example.mobilebanking.model.Musteri;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -64,11 +66,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL(createTableAlicilar);
 
+
+        db.execSQL("INSERT INTO islemTipleri (itNo, itBaslik, itRenk) VALUES (1, 'Para Yatırma', '#188e1f'), (2, 'Para Çekme', '#8e2f18'), (3, 'Doviz Satım', '#188e1f'),(4, 'Döviz Alım', '#8e2f18')");
+
         // Tetikleyiciyi oluşturma sorgusunu ekleyin
         db.execSQL("CREATE TRIGGER IF NOT EXISTS yeni_musteri_trigger AFTER INSERT ON musteriler " +
                 "BEGIN " +
                 "INSERT INTO hesaplar (hesapNo, hesapAdi, hesapBakiye, musteriNo, hesapDovizTipi) " +
-                "VALUES (NEW.musteriNo + 834521,NEW.musteriFullname, 10000, NEW.musteriNo, 1);" +
+                "VALUES (NEW.musteriNo + 834521, NEW.musteriFullname, 10000, NEW.musteriNo, 1);" +
+                "END;");
+
+        db.execSQL("CREATE TRIGGER IF NOT EXISTS yeni_muster_islem_trigger AFTER INSERT ON musteriler " +
+                "BEGIN " +
+                "INSERT INTO islemler (hesapNo, islemMiktar, islemTipi) " +
+                "VALUES (NEW.musteriNo + 834521, 10000, 1);" +
                 "END;");
 
         //db.execSQL("UPDATE SQLITE_SEQUENCE SET seq = 86630014 WHERE name = 'hesaplar'");
@@ -148,7 +159,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Cursor cursorHesap = db.query("hesaplar", hesapColumns, hesapSelection, hesapSelectionArgs, null, null, null);
 
             List<Hesap> hesaplar = new ArrayList<Hesap>();
-
+            List<Islem> tumIslemler = new ArrayList<Islem>();
             if (cursorHesap != null && cursorHesap.moveToFirst()) {
                 do {
                     Hesap hesap = new Hesap();
@@ -191,11 +202,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 if (cursorIslem != null) {
                     cursorIslem.close();
                 }
-
+                tumIslemler.addAll(islemler);
                 hesap.setIslemler(islemler);
 
             });
 
+            Comparator<Islem> byDate = new Comparator<Islem>() {
+                @Override
+                public int compare(Islem o1, Islem o2) {
+                    return o1.getIslemTarih().compareTo(o2.getIslemTarih());
+                }
+            };
+
+            Collections.sort(tumIslemler,byDate);
+
+            List<Islem> son20Islem = tumIslemler.subList(0, Math.min(20, tumIslemler.size()));
+            musteri.setSonIslemler(son20Islem);
             musteri.setHesaplar(hesaplar);
             musteri.setAlicilar(getAlicilarByMusteriNo(musteri.getMusteriNo()));
         }

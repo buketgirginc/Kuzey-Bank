@@ -11,6 +11,8 @@ public class Musteri {
     private List<Hesap> hesaplar;
     private List<Alici> alicilar;
 
+    private List <Islem> sonIslemler;
+
     public Musteri() {
     }
 
@@ -66,5 +68,13 @@ public class Musteri {
 
     public List<Alici> getAlicilar() {
         return alicilar;
+    }
+
+    public void setSonIslemler(List<Islem> sonIslemler) {
+        this.sonIslemler = sonIslemler;
+    }
+
+    public List<Islem> getSonIslemler() {
+        return sonIslemler;
     }
 }

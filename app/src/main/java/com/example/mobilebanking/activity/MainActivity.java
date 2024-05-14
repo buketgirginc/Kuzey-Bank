@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-
         musteri = SessionManager.getUser(this);
         anaHesap = musteri.getHesaplar().get(0);
         databaseHelper = new DatabaseHelper(this);
