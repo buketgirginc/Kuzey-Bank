@@ -291,6 +291,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public long addHesap(Hesap hesap) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put("hesapNo", hesap.getHesapNo());
         values.put("hesapAdi", hesap.getHesapAdi());
         values.put("hesapDovizTipi", hesap.getHesapDovizTipi().getValue());
         values.put("hesapBakiye", hesap.getHesapBakiye());

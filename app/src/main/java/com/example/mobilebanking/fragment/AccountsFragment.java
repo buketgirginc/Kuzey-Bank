@@ -25,6 +25,7 @@ import com.example.mobilebanking.model.Hesap;
 import com.example.mobilebanking.model.Musteri;
 
 import java.util.List;
+import java.util.Random;
 
 
 public class AccountsFragment extends Fragment {
@@ -89,6 +90,9 @@ public class AccountsFragment extends Fragment {
                 String accountName = accountNameEditText.getText().toString();
                 Currency currency = getSelectedCurrency(currencyRadioGroup);
                 Hesap yeniHesap = new Hesap();
+                Random random = new Random();
+                int randomNumber = random.nextInt(999999 - 850000 + 1) + 850000;
+                yeniHesap.setHesapNo(randomNumber);
                 yeniHesap.setMusteriNo(musteri.getMusteriNo());
                 yeniHesap.setHesapAdi(accountName);
                 yeniHesap.setHesapBakiye(0.00f);
