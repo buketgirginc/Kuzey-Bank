@@ -353,4 +353,47 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public Hesap getHesapByHesapNo(int hesapNo) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Hesap hesap = null;
+
+        // Veritabanından hesap bilgisini almak için sorgu yapılacak
+        Cursor cursor = db.query("hesaplar", // Tablo adı
+                null, // Sorgu için döndürülecek sütunlar (null tüm sütunları alır)
+                "hesapNo = ?", // WHERE koşulu
+                new String[]{String.valueOf(hesapNo)}, // Koşul parametreleri
+                null, // GROUP BY
+                null, // HAVING
+                null); // ORDER BY
+
+        // Cursor'ın başına geç
+        if (cursor != null && cursor.moveToFirst()) {
+            // Hesap bilgisini oluştur
+            int hesapNoIndex = cursor.getColumnIndex("hesapNo");
+            int hesapAdiIndex = cursor.getColumnIndex("hesapAdi");
+            int hesapDovizTipiIndex = cursor.getColumnIndex("hesapDovizTipi");
+            int hesapBakiyeIndex = cursor.getColumnIndex("hesapBakiye");
+            int musteriNoIndex = cursor.getColumnIndex("musteriNo");
+
+            int retrievedHesapNo = cursor.getInt(hesapNoIndex);
+            String retrievedHesapAdi = cursor.getString(hesapAdiIndex);
+            Currency retrievedHesapDovizTipi = Currency.fromValue(cursor.getInt(hesapDovizTipiIndex)); // Bu kısmı Currency enumuna dönüştürmeniz gerekebilir
+            float retrievedHesapBakiye = cursor.getFloat(hesapBakiyeIndex);
+            int retrievedMusteriNo = cursor.getInt(musteriNoIndex);
+
+            hesap = new Hesap(retrievedHesapNo, retrievedHesapAdi, retrievedHesapDovizTipi, retrievedHesapBakiye, retrievedMusteriNo);
+
+            // Cursor'ı kapat
+            cursor.close();
+        }
+
+        // Veritabanını kapat
+        db.close();
+
+        return hesap;
+    }
+
+
+
+
 }
