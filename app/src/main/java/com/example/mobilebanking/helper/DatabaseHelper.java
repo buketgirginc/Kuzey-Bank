@@ -34,6 +34,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         islemTipleri.add(new IslemTipi(3, "Döviz Satım", "#188e1f"));
         islemTipleri.add(new IslemTipi(4, "Döviz Alım", "#8e2f18"));
         islemTipleri.add(new IslemTipi(5, "Döviz Alım", "#188e1f"));
+        islemTipleri.add(new IslemTipi(6, "Para Gönderme", "#8e2f18"));
+        islemTipleri.add(new IslemTipi(7, "Para Gönderme", "#188e1f"));
     }
 
     @Override
@@ -325,7 +327,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
-
     public long addAlici(Alici alici) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -351,6 +352,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return result;
     }
-
 
 }
