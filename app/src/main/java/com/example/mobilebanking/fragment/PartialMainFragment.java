@@ -141,7 +141,7 @@ public class PartialMainFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, new TransferToOtherFragment());
+                transaction.replace(R.id.fragment_container, new TransferToOtherFragment(musteri));
                 transaction.addToBackStack(null);
                 transaction.commit();
                 if (alertDialog!=null) alertDialog.dismiss();
