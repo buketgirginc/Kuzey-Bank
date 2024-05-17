@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mobilebanking.R;
 import com.example.mobilebanking.adapter.ActivityAdapter;
 import com.example.mobilebanking.adapter.PersonAdapter;
+import com.example.mobilebanking.helper.DatabaseHelper;
 import com.example.mobilebanking.model.Hesap;
 import com.example.mobilebanking.model.Islem;
 import com.example.mobilebanking.model.Musteri;
@@ -35,10 +36,12 @@ public class PartialMainFragment extends Fragment {
     private Hesap hesap;
     private Musteri musteri;
 
+    private DatabaseHelper databaseHelper;
 
-    public PartialMainFragment(Hesap hesap, Musteri musteri) {
+    public PartialMainFragment(Hesap hesap, Musteri musteri, DatabaseHelper databaseHelper) {
         this.hesap = hesap;
         this.musteri = musteri;
+        this.databaseHelper = databaseHelper;
     }
 
     @Override
@@ -164,7 +167,7 @@ public class PartialMainFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, new BuyCurrencyFragment());
+                transaction.replace(R.id.fragment_container, new BuyCurrencyFragment(musteri, databaseHelper));
                 transaction.addToBackStack(null);
                 transaction.commit();
                 if(alertDialogCurrency!=null)alertDialogCurrency.dismiss();

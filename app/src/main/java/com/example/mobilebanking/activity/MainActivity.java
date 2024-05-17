@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     private void openHomeFragment() {
-        openFragment(new PartialMainFragment(anaHesap, musteri));
+        openFragment(new PartialMainFragment(anaHesap, musteri, databaseHelper));
     }
 
     private void openCurrencyFragment() {

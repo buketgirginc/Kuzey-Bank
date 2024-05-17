@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="Tutar Girişi:"
+            android:text="Maliyet:"
             android:textSize="16sp"
             android:textStyle="bold"
             android:padding="5dp"
@@ -67,15 +67,6 @@
             android:textSize="16sp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp" />
-
-        <Button
-            android:id="@+id/buttonConfirm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Onayla"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp" />
-
 
 
 </LinearLayout>

@@ -13,11 +13,13 @@ import com.example.mobilebanking.model.Islem;
 import com.example.mobilebanking.model.IslemTipi;
 import com.example.mobilebanking.model.Musteri;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -31,6 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         islemTipleri.add(new IslemTipi(2, "Para Çekme", "#8e2f18"));
         islemTipleri.add(new IslemTipi(3, "Döviz Satım", "#188e1f"));
         islemTipleri.add(new IslemTipi(4, "Döviz Alım", "#8e2f18"));
+        islemTipleri.add(new IslemTipi(5, "Döviz Alım", "#188e1f"));
     }
 
     @Override
@@ -86,8 +89,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TRIGGER IF NOT EXISTS yeni_muster_islem_trigger AFTER INSERT ON musteriler " +
                 "BEGIN " +
-                "INSERT INTO islemler (hesapNo, islemMiktar, islemTipi) " +
-                "VALUES (NEW.musteriNo + 834521, 10000, 1);" +
+                "INSERT INTO islemler (hesapNo, islemMiktar, islemTipi, islemTarih) " +
+                "VALUES (NEW.musteriNo + 834521, 10000, 1, "+System.currentTimeMillis()+");" +
                 "END;");
 
         //db.execSQL("UPDATE SQLITE_SEQUENCE SET seq = 86630014 WHERE name = 'hesaplar'");
@@ -226,7 +229,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Comparator<Islem> byDate = new Comparator<Islem>() {
                 @Override
                 public int compare(Islem o1, Islem o2) {
-                    return o1.getIslemTarih().compareTo(o2.getIslemTarih());
+                    if (o1.getIslemTarih() != null && o2.getIslemTarih() != null){
+                        return o2.getIslemTarih().compareTo(o1.getIslemTarih());
+                    }
+                    return 0;
                 }
             };
 
@@ -302,6 +308,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public long saveHesap(Hesap hesap) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("hesapAdi", hesap.getHesapAdi());
+        values.put("hesapDovizTipi", hesap.getHesapDovizTipi().getValue());
+        values.put("hesapBakiye", hesap.getHesapBakiye());
+        values.put("musteriNo", hesap.getMusteriNo());
+
+        // Kayıt için whereClause ve whereArgs oluştur
+        String whereClause = "hesapNo = ?";
+        String[] whereArgs = { String.valueOf(hesap.getHesapNo()) };
+
+        int result = db.update("hesaplar", values, whereClause, whereArgs);
+        db.close();
+        return result;
+    }
+
+
     public long addAlici(Alici alici) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -310,6 +334,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("musteriNo", alici.getMusteriNo());
 
         long result = db.insert("alicilar", null, values);
+        db.close();
+        return result;
+    }
+
+    public long addIslem(Islem islem) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("hesapNo", islem.getHesap().getHesapNo());
+        values.put("islemMiktar", islem.getIslemMiktar());
+        values.put("islemTipi", islem.getIslemTipi().getItNo());
+        values.put("islemTarih", System.currentTimeMillis());
+
+        long result = db.insert("islemler", null, values);
         db.close();
         return result;
     }

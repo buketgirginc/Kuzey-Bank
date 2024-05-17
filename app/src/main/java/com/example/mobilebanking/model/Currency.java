@@ -38,4 +38,13 @@ public enum Currency {
         }
         throw new IllegalArgumentException("Geçersiz para birimi adı: " + name);
     }
+
+    public float getTLCurrency(){
+        if (this == Currency.DOLAR){
+            return 32.33f;
+        } else if (this == Currency.EURO){
+            return 34.14f;
+        }
+        return 1;
+    }
 }
