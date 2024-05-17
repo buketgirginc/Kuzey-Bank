@@ -179,7 +179,7 @@ public class PartialMainFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, new SellCurrencyFragment());
+                transaction.replace(R.id.fragment_container, new SellCurrencyFragment(musteri,databaseHelper));
                 transaction.addToBackStack(null);
                 transaction.commit();
                 if(alertDialogCurrency!=null)alertDialogCurrency.dismiss();

@@ -34,7 +34,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<TransactionViewHolder>
     @Override
     public void onBindViewHolder(@NonNull TransactionViewHolder holder, int position) {
         holder.title.setText(String.format("%s", items.get(position).getIslemTipi().getItBaslik()));
-        holder.desc.setText("Tarih");
+        holder.desc.setText(String.format("%s #%d", items.get(position).getHesap().getHesapAdi(), items.get(position).getIslemNo()));
         holder.amount.setText(String.format("%s %s",items.get(position).getIslemMiktar(), items.get(position).getHesap().getHesapDovizTipi().getName()));
         holder.amount.setTextColor(Color.parseColor(items.get(position).getIslemTipi().getItRenk()));
     }

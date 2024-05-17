@@ -1,6 +1,6 @@
 package com.example.mobilebanking.model;
 import java.util.Date;
-public class Islem {
+public class Islem implements Comparable<Islem>{
     private int islemNo;
     private Hesap hesap;
     private float islemMiktar;
@@ -57,5 +57,10 @@ public class Islem {
 
     public void setIslemTarih(Date islemTarih) {
         this.islemTarih = islemTarih;
+    }
+
+    @Override
+    public int compareTo(Islem o) {
+        return Integer.compare(o.islemNo,this.islemNo);
     }
 }

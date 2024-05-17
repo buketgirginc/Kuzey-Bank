@@ -36,6 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         islemTipleri.add(new IslemTipi(5, "Döviz Alım", "#188e1f"));
         islemTipleri.add(new IslemTipi(6, "Para Gönderme", "#8e2f18"));
         islemTipleri.add(new IslemTipi(7, "Para Gönderme", "#188e1f"));
+        islemTipleri.add(new IslemTipi(9, "Döviz Satım", "#8e2f18"));
     }
 
     @Override
@@ -64,7 +65,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "hesapNo INT(11)," +
                 "islemMiktar FLOAT(10,2)," +
                 "islemTipi INT(11)," +
-                "islemTarih DATE DEFAULT CURRENT_DATE," +
+                "islemTarih DATETIME DEFAULT CURRENT_TIMESTAMP," +
                 "FOREIGN KEY (hesapNo) REFERENCES hesaplar(hesapNo)," +
                 "FOREIGN KEY (islemTipi) REFERENCES islemTipleri(itNo));");
 
@@ -91,8 +92,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TRIGGER IF NOT EXISTS yeni_muster_islem_trigger AFTER INSERT ON musteriler " +
                 "BEGIN " +
-                "INSERT INTO islemler (hesapNo, islemMiktar, islemTipi, islemTarih) " +
-                "VALUES (NEW.musteriNo + 834521, 10000, 1, "+System.currentTimeMillis()+");" +
+                "INSERT INTO islemler (hesapNo, islemMiktar, islemTipi) " +
+                "VALUES (NEW.musteriNo + 834521, 10000, 1);" +
                 "END;");
 
         //db.execSQL("UPDATE SQLITE_SEQUENCE SET seq = 86630014 WHERE name = 'hesaplar'");
@@ -215,7 +216,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         islem.setIslemTipi(getIslemTipi(cursorIslem.getInt(cursorIslem.getColumnIndex("islemTipi"))));
                         islem.setHesap(hesap);
                         islem.setIslemMiktar(cursorIslem.getFloat(cursorIslem.getColumnIndex("islemMiktar")));
-                        islem.setIslemTarih(null);
                         islemler.add(islem);
                     } while (cursorIslem.moveToNext());
                 }
@@ -223,24 +223,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 if (cursorIslem != null) {
                     cursorIslem.close();
                 }
+
                 tumIslemler.addAll(islemler);
                 hesap.setIslemler(islemler);
 
             });
 
-            Comparator<Islem> byDate = new Comparator<Islem>() {
-                @Override
-                public int compare(Islem o1, Islem o2) {
-                    if (o1.getIslemTarih() != null && o2.getIslemTarih() != null){
-                        return o2.getIslemTarih().compareTo(o1.getIslemTarih());
-                    }
-                    return 0;
-                }
-            };
-
-            Collections.sort(tumIslemler,byDate);
 
             List<Islem> son20Islem = tumIslemler.subList(0, Math.min(20, tumIslemler.size()));
+            Collections.sort(son20Islem);
 
             musteri.setSonIslemler(son20Islem);
             musteri.setHesaplar(hesaplar);
@@ -346,7 +337,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("hesapNo", islem.getHesap().getHesapNo());
         values.put("islemMiktar", islem.getIslemMiktar());
         values.put("islemTipi", islem.getIslemTipi().getItNo());
-        values.put("islemTarih", System.currentTimeMillis());
 
         long result = db.insert("islemler", null, values);
         db.close();
